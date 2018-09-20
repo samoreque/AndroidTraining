@@ -1,6 +1,7 @@
 package avantica.training.com.myfirstapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,13 +26,43 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Button btnOk = findViewById(R.id.btnAccept);
+       /* Button btnOk = findViewById(R.id.btnAccept);
         final TextView txtName = findViewById(R.id.txtName);
         txtName.setText("Samuel Reque");
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Name: " + txtName.getText());
+            }
+        });*/
+       Button btnWebView = findViewById(R.id.btnWebView);
+        btnWebView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "http://www.google.com";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+       });
+
+        Button btnCall = findViewById(R.id.btnMakeACall);
+        btnCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_DIAL);
+                i.setData(Uri.parse("tel:(404)123-4567"));
+                startActivity(i);
+            }
+        });
+
+        Button btnGeo = findViewById(R.id.btnGeo);
+        btnGeo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("geo:54.1234,52.1234?z=22"));
+                startActivity(i);
             }
         });
 

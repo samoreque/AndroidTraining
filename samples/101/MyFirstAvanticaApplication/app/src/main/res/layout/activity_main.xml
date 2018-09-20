@@ -24,21 +24,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/btnAccept"
-            android:layout_width="wrap_content"
+            android:id="@+id/btnWebView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Ok" />
+            android:text="@string/lbl_web_view" />
 
-        <TextView
-            android:id="@+id/txtName"
-            android:layout_width="wrap_content"
+        <Button
+            android:id="@+id/btnMakeACall"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Nombre" />
+            android:text="Make a call" />
+
+        <Button
+            android:id="@+id/btnGeo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Georeference" />
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton

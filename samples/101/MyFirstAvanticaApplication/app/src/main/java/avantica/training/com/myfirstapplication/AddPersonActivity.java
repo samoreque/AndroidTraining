@@ -18,7 +18,7 @@ public class AddPersonActivity extends AppCompatActivity {
         String title ="";
         int age =0;
         if(bundle != null) {
-            title = bundle.getString(PARAM_TITLE, "default title " + 15);
+            title = bundle.getString(PARAM_TITLE, "default title "+15);
             age = bundle.getInt(PARAM_AGE, 0);
         }
         setTitle(title);
