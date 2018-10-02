@@ -7,6 +7,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -78,11 +79,16 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
                 intent.putExtra(AddPersonActivity.PARAM_TITLE, "Add Person");
                 intent.putExtra(AddPersonActivity.PARAM_AGE, 10);
                 startActivity(intent);*/
-                Fragment newFragment = InfromationFragment.newInstance("", "");
+                /*Fragment newFragment = InfromationFragment.newInstance("", "");
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.lyContainer, newFragment);
                 transaction.addToBackStack(null);
-                transaction.commit();
+                transaction.commit();*/
+                Intent intentNewFriend = new Intent();
+                intentNewFriend.setAction("avantica.training.com.myfirstapplication.ACTION_NEW_FRIEND");
+                intentNewFriend.putExtra("name", "Avantica");
+                //intentNewFriend.setPackage("avantica.training.com.myfirstapplication");
+                sendBroadcast(intentNewFriend);
 
             }
         });

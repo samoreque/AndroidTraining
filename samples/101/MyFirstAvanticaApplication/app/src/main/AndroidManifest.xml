@@ -21,6 +21,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".AddPersonActivity"></activity>
+        <receiver android:name=".MyBroadcastReceiver" android:exported="true">
+            <intent-filter>
+                <!--<action android:name="android.intent.action.BOOT_COMPLETED"/>-->
+                <!--<action android:name="android.intent.action.INPUT_METHOD_CHANGED" />-->
+                <action android:name="android.intent.action.AIRPLANE_MODE"/>
+                <action android:name="avantica.training.com.myfirstapplication.ACTION_NEW_FRIEND" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
