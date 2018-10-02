@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -13,10 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
     public static final String TAG="TrainingTag";
-
+    InfromationFragment infoFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,16 +29,17 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       /* Button btnOk = findViewById(R.id.btnAccept);
-        final TextView txtName = findViewById(R.id.txtName);
-        txtName.setText("Samuel Reque");
-        btnOk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Name: " + txtName.getText());
-            }
-        });*/
-       Button btnWebView = findViewById(R.id.btnWebView);
+
+        Fragment newFragment = OptionFragment.newInstance("", "");
+        infoFragment = InfromationFragment.newInstance("","");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.lyContainer, newFragment);
+        transaction.replace(R.id.lyContainerUp, infoFragment);
+
+        transaction.addToBackStack(null);
+        transaction.commit();
+
+      /* Button btnWebView = findViewById(R.id.btnWebView);
         btnWebView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,16 +68,21 @@ public class MainActivity extends AppCompatActivity {
                 i.setData(Uri.parse("geo:54.1234,52.1234?z=22"));
                 startActivity(i);
             }
-        });
+        });*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
+                /*Intent intent = new Intent(MainActivity.this, AddPersonActivity.class);
                 intent.putExtra(AddPersonActivity.PARAM_TITLE, "Add Person");
                 intent.putExtra(AddPersonActivity.PARAM_AGE, 10);
-                startActivity(intent);
+                startActivity(intent);*/
+                Fragment newFragment = InfromationFragment.newInstance("", "");
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.lyContainer, newFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
 
             }
         });
@@ -124,5 +133,11 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("TrainingTag", "onDestroy");
         super.onDestroy();
+    }
+
+    @Override
+    public void onFragmentInteraction(String value) {
+        Toast.makeText(this, "user pressed: " + value, Toast.LENGTH_SHORT).show();
+        infoFragment.setMessage(value);
     }
 }
