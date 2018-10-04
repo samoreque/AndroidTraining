@@ -81,6 +81,13 @@ public class OptionFragment extends Fragment {
         rootView.findViewById(R.id.btnWebView).setOnClickListener(onClickListener);
         rootView.findViewById(R.id.btnGeo).setOnClickListener(onClickListener);
         rootView.findViewById(R.id.btnMakeACall).setOnClickListener(onClickListener);
+
+        rootView.findViewById(R.id.btnRecyclerExample).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         return rootView;
     }
 
@@ -121,5 +128,6 @@ public class OptionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(String value);
+        void startRecyclerExample();
     }
 }

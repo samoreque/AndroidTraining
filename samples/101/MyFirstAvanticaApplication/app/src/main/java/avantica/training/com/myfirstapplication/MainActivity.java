@@ -146,4 +146,14 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         Toast.makeText(this, "user pressed: " + value, Toast.LENGTH_SHORT).show();
         infoFragment.setMessage(value);
     }
+
+    @Override
+    public void startRecyclerExample(){
+        Fragment newFragment = RecyclerFragment.newInstance("", "");
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.lyContainer, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
 }

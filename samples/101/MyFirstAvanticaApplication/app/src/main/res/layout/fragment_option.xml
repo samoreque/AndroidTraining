@@ -24,4 +24,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Georeference" />
+
+    <Button
+        android:id="@+id/btnRecyclerExample"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Recycler Example" />
 </LinearLayout>
