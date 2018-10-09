@@ -151,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
     public void startRecyclerExample(){
         Fragment newFragment = RecyclerFragment.newInstance("", "");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.lyContainer, newFragment);
+        transaction.replace(R.id.lyContainerUp, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

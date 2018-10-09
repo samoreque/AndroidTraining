@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -78,7 +81,7 @@ public class RecyclerFragment extends Fragment {
         rvPersons.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         rvPersons.setLayoutManager(manager);
-        rvPersons.setAdapter(new MyAdapter());
+        rvPersons.setAdapter(new MyAdapter(getAllPeople()));
         return rootView;
     }
 
@@ -97,6 +100,31 @@ public class RecyclerFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public List<Person> getAllPeople() {
+        List<Person> peopleList = new ArrayList<>();
+        peopleList.add(new Person("Samuel", android.R.drawable.ic_media_next));
+        peopleList.add(new Person("Wilder", android.R.drawable.ic_dialog_email));
+        peopleList.add(new Person("Diego", android.R.drawable.ic_lock_power_off));
+        peopleList.add(new Person("Bryan", android.R.drawable.ic_delete));
+        peopleList.add(new Person("Wilson", android.R.drawable.ic_dialog_info));
+        peopleList.add(new Person("Samuel", android.R.drawable.ic_media_next));
+        peopleList.add(new Person("Wilder", android.R.drawable.ic_dialog_email));
+        peopleList.add(new Person("Diego", android.R.drawable.ic_lock_power_off));
+        peopleList.add(new Person("Bryan", android.R.drawable.ic_delete));
+        peopleList.add(new Person("Wilson", android.R.drawable.ic_dialog_info));
+        peopleList.add(new Person("Samuel", android.R.drawable.ic_media_next));
+        peopleList.add(new Person("Wilder", android.R.drawable.ic_dialog_email));
+        peopleList.add(new Person("Diego", android.R.drawable.ic_lock_power_off));
+        peopleList.add(new Person("Bryan", android.R.drawable.ic_delete));
+        peopleList.add(new Person("Wilson", android.R.drawable.ic_dialog_info));
+        peopleList.add(new Person("Samuel", android.R.drawable.ic_media_next));
+        peopleList.add(new Person("Wilder", android.R.drawable.ic_dialog_email));
+        peopleList.add(new Person("Diego", android.R.drawable.ic_lock_power_off));
+        peopleList.add(new Person("Bryan", android.R.drawable.ic_delete));
+        peopleList.add(new Person("Wilson", android.R.drawable.ic_dialog_info));
+        return peopleList;
     }
 
     /**
@@ -124,15 +152,28 @@ public class RecyclerFragment extends Fragment {
             // each data item is just a string in this case
             public TextView txtName;
             public ImageView imgPhoto;
+            public int position = -1;
             public MyViewHolder(View v) {
                 super(v);
                 txtName = v.findViewById(R.id.txtName);
                 imgPhoto = v.findViewById(R.id.imgPhoto);
             }
 
-            public void bind(Person person) {
+            public void bind(final Person person, int position) {
                 txtName.setText(person.Name);
                 imgPhoto.setImageResource(person.photoResId);
+                this.position = position;
+                imgPhoto.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "click on " + person.Name, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                if (!person.Name.toLowerCase().contains("samuel")){
+                    imgPhoto.setVisibility(View.INVISIBLE);
+                } else {
+                    imgPhoto.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -147,7 +188,7 @@ public class RecyclerFragment extends Fragment {
                                                          int viewType) {
             // create a new view
             View v =  LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.layout_persons_item, parent, false)
+                    .inflate(R.layout.layout_persons_item, parent, false);
 
             MyViewHolder vh = new MyViewHolder(v);
             return vh;
@@ -158,7 +199,8 @@ public class RecyclerFragment extends Fragment {
         public void onBindViewHolder(MyViewHolder holder, int position) {
             // - get element from your dataset at this position
             // - replace the contents of the view with that element
-            holder.bind(mDataset.get(position));
+            Log.d(MyAdapter.class.getName(), "holder changed from " + holder.position + " to " + position);
+            holder.bind(mDataset.get(position), position);
 
         }
 

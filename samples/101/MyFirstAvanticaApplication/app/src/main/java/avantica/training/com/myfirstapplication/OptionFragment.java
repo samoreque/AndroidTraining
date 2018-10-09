@@ -85,7 +85,7 @@ public class OptionFragment extends Fragment {
         rootView.findViewById(R.id.btnRecyclerExample).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                mListener.startRecyclerExample();
             }
         });
         return rootView;
