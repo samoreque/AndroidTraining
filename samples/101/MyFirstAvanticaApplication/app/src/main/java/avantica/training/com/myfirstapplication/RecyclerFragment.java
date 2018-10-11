@@ -17,6 +17,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import avantica.training.com.myfirstapplication.views.GamerControl;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +39,7 @@ public class RecyclerFragment extends Fragment {
     private String mParam2;
     private View rootView;
     private RecyclerView rvPersons;
-
+    private GamerControl gcControls;
 
     private OnFragmentInteractionListener mListener;
 
@@ -77,6 +79,13 @@ public class RecyclerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView =inflater.inflate(R.layout.fragment_recycler, container, false);
+        gcControls = rootView.findViewById(R.id.gcControls);
+        gcControls.setGameControlListener(new GamerControl.GamerControlListener() {
+            @Override
+            public void onClickAction(GamerControl.ActionGame actionGame) {
+                Toast.makeText(getContext(), "Action pressed is " + actionGame.getDescription(), Toast.LENGTH_SHORT).show();
+            }
+        });
         rvPersons = rootView.findViewById(R.id.rvPersons);
         rvPersons.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());

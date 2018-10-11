@@ -13,6 +13,16 @@
         android:layout_height="wrap_content"
         android:text="Lista de Personas" />
 
+    <avantica.training.com.myfirstapplication.views.PrefixTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <avantica.training.com.myfirstapplication.views.GamerControl
+        android:id="@+id/gcControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        control:color=""/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvPersons"
         android:layout_width="match_parent"
