@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
 
         transaction.addToBackStack(null);
         transaction.commit();
+        MyFirstApplication.getInstance().setUser(new Person("Wilder", android.R.drawable.ic_media_next));
 
       /* Button btnWebView = findViewById(R.id.btnWebView);
         btnWebView.setOnClickListener(new View.OnClickListener() {

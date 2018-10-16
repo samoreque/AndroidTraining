@@ -1,5 +1,7 @@
 package avantica.training.com.myfirstapplication;
 
+import android.content.Context;
+
 class Person {
     public String Name;
     public int photoResId;
