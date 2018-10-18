@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import avantica.training.com.myfirstapplication.databases.FirstAppDataBaseHelper;
+import avantica.training.com.myfirstapplication.models.User;
+
 public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
     public static final String TAG="TrainingTag";
     InfromationFragment infoFragment;
@@ -29,6 +32,10 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FirstAppDataBaseHelper dataBaseHelper = new FirstAppDataBaseHelper(getApplicationContext());
+        User user = new User("samo", "1234");
+        user.create(dataBaseHelper.getWritableDatabase());
 
 
         Fragment newFragment = OptionFragment.newInstance("", "");

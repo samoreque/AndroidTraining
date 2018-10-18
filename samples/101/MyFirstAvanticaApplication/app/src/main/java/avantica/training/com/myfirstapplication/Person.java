@@ -2,7 +2,7 @@ package avantica.training.com.myfirstapplication;
 
 import android.content.Context;
 
-class Person {
+public class Person {
     public static final String USER_NAME="username";
 
     public static final String USER_PHOTO="photo";
