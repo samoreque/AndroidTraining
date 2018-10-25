@@ -5,12 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import avantica.training.com.myfirstapplication.models.ClassesUser;
 import avantica.training.com.myfirstapplication.models.User;
 
 public class FirstAppDataBaseHelper extends SQLiteOpenHelper {
 
     public static final String DATA_BASE_NAME = "FirstAppDataBaseHelper.db";
-    public static final int DATA_BASE_VERSION = 3;
+    public static final int DATA_BASE_VERSION = 4;
 
     public FirstAppDataBaseHelper(Context context) {
         super(context, DATA_BASE_NAME, null, DATA_BASE_VERSION);
@@ -30,7 +31,7 @@ public class FirstAppDataBaseHelper extends SQLiteOpenHelper {
             case 2:
                 // updates or inserts
             case 3:
-                // updates or
+                sqLiteDatabase.execSQL(ClassesUser.SQL_CREATE_TABLE);
         }
     }
 }

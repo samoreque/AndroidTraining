@@ -18,7 +18,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
 import avantica.training.com.myfirstapplication.databases.FirstAppDataBaseHelper;
+import avantica.training.com.myfirstapplication.databases.UserDatabaseManager;
+import avantica.training.com.myfirstapplication.models.ClassesUser;
 import avantica.training.com.myfirstapplication.models.User;
 
 public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
@@ -35,7 +42,13 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
 
         FirstAppDataBaseHelper dataBaseHelper = new FirstAppDataBaseHelper(getApplicationContext());
         User user = new User("samo", "1234");
-        user.create(dataBaseHelper.getWritableDatabase());
+        List<ClassesUser> userClassesList = new ArrayList<>();
+        Random random = new Random();
+        for (int i=0; i< 5; i++) {
+            ClassesUser cls = new ClassesUser("Inf-10"+ i, new Date(), random.nextInt(100));
+            userClassesList.add(cls);
+        }
+        UserDatabaseManager.saveUserInfo(user, userClassesList);
 
 
         Fragment newFragment = OptionFragment.newInstance("", "");

@@ -39,7 +39,7 @@ public class User implements IModel {
     @Override
     public void create(SQLiteDatabase db) {
         id = db.insert(TABLE_NAME, null, toContentValues());
-        db.close();
+        //db.close();
     }
 
     @Override
@@ -48,5 +48,9 @@ public class User implements IModel {
         cv.put(FIELD_LOGIN, login);
         cv.put(FIELD_PASSWORD, password);
         return cv;
+    }
+
+    public long getId() {
+        return id;
     }
 }
