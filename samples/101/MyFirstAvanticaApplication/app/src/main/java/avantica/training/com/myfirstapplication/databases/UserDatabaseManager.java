@@ -3,6 +3,7 @@ package avantica.training.com.myfirstapplication.databases;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import avantica.training.com.myfirstapplication.MyFirstApplication;
@@ -32,6 +33,15 @@ public class UserDatabaseManager {
             db.endTransaction();
             db.close();
         }
+    }
+
+    public static List<ClassesUser> getClassesUser(Integer userId) {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
 }

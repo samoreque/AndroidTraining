@@ -31,6 +31,12 @@ import avantica.training.com.myfirstapplication.models.User;
 public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
     public static final String TAG="TrainingTag";
     InfromationFragment infoFragment;
+    private GetUserClassesAsyncTask.IGetClassesUserListener listener = new GetUserClassesAsyncTask.IGetClassesUserListener() {
+        @Override
+        public void onGetClassesUser(List<ClassesUser> users) {
+            Toast.makeText(MainActivity.this, "users classes: "+ users.size(), Toast.LENGTH_SHORT).show();
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -141,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
     protected void onResume() {
         Log.d("TrainingTag", "onResume");
         super.onResume();
+        new GetUserClassesAsyncTask(listener).execute(1);
     }
 
 
@@ -176,5 +183,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 
 }
