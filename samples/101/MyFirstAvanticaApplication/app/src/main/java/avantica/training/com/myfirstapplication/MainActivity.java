@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +28,14 @@ import java.util.Random;
 import avantica.training.com.myfirstapplication.databases.FirstAppDataBaseHelper;
 import avantica.training.com.myfirstapplication.databases.UserDatabaseManager;
 import avantica.training.com.myfirstapplication.models.ClassesUser;
+import avantica.training.com.myfirstapplication.models.Project;
 import avantica.training.com.myfirstapplication.models.User;
+import avantica.training.com.myfirstapplication.retrofit.GithubAPI;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
     public static final String TAG="TrainingTag";
@@ -119,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
 
             }
         });
+        getProjects();
     }
 
     @Override
@@ -184,6 +194,28 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         transaction.commit();
     }
 
+    public void getProjects() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(GithubAPI.HTTPS_API_GITHUB_URL)
+                .addConverterFactory(GsonConverterFactory.create())
 
+                .build();
+
+        GithubAPI gitServices = retrofit.create(GithubAPI.class);
+        Call<List<Project>> call = gitServices.getProjectList("Google");
+        call.enqueue(new Callback<List<Project>>() {
+            @Override
+            public void onResponse(Call<List<Project>> call, Response<List<Project>> response) {
+                for (Project project : response.body()) {
+                    Log.d("", project.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Project>> call, Throwable t) {
+                Log.e("", "Error getting projects", t);
+            }
+        });
+    }
 
 }
