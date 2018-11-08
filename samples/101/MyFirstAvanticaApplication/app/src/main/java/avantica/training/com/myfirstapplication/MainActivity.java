@@ -1,45 +1,36 @@
 package avantica.training.com.myfirstapplication;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
-import avantica.training.com.myfirstapplication.databases.FirstAppDataBaseHelper;
-import avantica.training.com.myfirstapplication.databases.UserDatabaseManager;
+import avantica.training.com.myfirstapplication.Presenters.UserPresenter;
 import avantica.training.com.myfirstapplication.models.ClassesUser;
 import avantica.training.com.myfirstapplication.models.Project;
 import avantica.training.com.myfirstapplication.models.User;
 import avantica.training.com.myfirstapplication.retrofit.GithubAPI;
+import avantica.training.com.myfirstapplication.views.UserView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements OptionFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements UserView, OptionFragment.OnFragmentInteractionListener {
     public static final String TAG="TrainingTag";
     InfromationFragment infoFragment;
+    UserPresenter presenter;
     private GetUserClassesAsyncTask.IGetClassesUserListener listener = new GetUserClassesAsyncTask.IGetClassesUserListener() {
         @Override
         public void onGetClassesUser(List<ClassesUser> users) {
@@ -55,15 +46,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FirstAppDataBaseHelper dataBaseHelper = new FirstAppDataBaseHelper(getApplicationContext());
-        User user = new User("samo", "1234");
-        List<ClassesUser> userClassesList = new ArrayList<>();
-        Random random = new Random();
-        for (int i=0; i< 5; i++) {
-            ClassesUser cls = new ClassesUser("Inf-10"+ i, new Date(), random.nextInt(100));
-            userClassesList.add(cls);
-        }
-        UserDatabaseManager.saveUserInfo(user, userClassesList);
+
 
 
         Fragment newFragment = OptionFragment.newInstance("", "");
@@ -129,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
             }
         });
         getProjects();
+        presenter = new UserPresenter(this);
     }
 
     @Override
@@ -218,4 +202,26 @@ public class MainActivity extends AppCompatActivity implements OptionFragment.On
         });
     }
 
+    @Override
+    public void onGetUserClasses(List<ClassesUser> classesUsers) {
+
+    }
+
+    @Override
+    public void onUser(UserPresenter presenter, User user) {
+        Log.d(TAG, "user found " + user.getLogin());
+        presenter.generateUserClasses(getApplicationContext(), user);
+
+    }
+
+    @Override
+    public void onGeneratedClassesSuccess(User user, List<ClassesUser> classesUsers) {
+        Toast.makeText(MainActivity.this, "Classes for "+ user.getLogin()+ " created ("
+                + classesUsers.size() + ")", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onError(Exception err) {
+
+    }
 }
