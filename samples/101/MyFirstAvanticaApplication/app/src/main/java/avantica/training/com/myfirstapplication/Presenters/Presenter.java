@@ -6,7 +6,6 @@ public abstract class Presenter<T extends View> {
     private T view;
     public Presenter(T view) {
         this.view = view;
-        initPresenter();
     }
 
     public abstract void initPresenter();

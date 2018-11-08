@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import avantica.training.com.myfirstapplication.DataSources.UserDataSourceAPI;
+import avantica.training.com.myfirstapplication.DataSources.UserDataSourceDB;
+import avantica.training.com.myfirstapplication.Respositories.UserRepository;
 import avantica.training.com.myfirstapplication.databases.FirstAppDataBaseHelper;
 import avantica.training.com.myfirstapplication.databases.UserDatabaseManager;
 import avantica.training.com.myfirstapplication.models.ClassesUser;
@@ -14,29 +17,29 @@ import avantica.training.com.myfirstapplication.models.User;
 import avantica.training.com.myfirstapplication.views.UserView;
 
 public class UserPresenter extends Presenter<UserView> {
+    private UserRepository repository;
 
     public UserPresenter(UserView view) {
         super(view);
+        Random random = new Random();
+        if(random.nextBoolean()) {
+            repository = new UserRepository(new UserDataSourceDB());
+        } else {
+            repository = new UserRepository(new UserDataSourceAPI());
+        }
     }
 
     @Override
     public void initPresenter() {
         // User can be gettting of any resource
-        User user = new User("samo", "1234");
-        getUserView().onUser(this, user);
+
+        getUserView().onUser(this, repository.getUser());
 
     }
     public void generateUserClasses(Context context, User user) {
+
         try {
-            FirstAppDataBaseHelper dataBaseHelper = new FirstAppDataBaseHelper(context);
-            List<ClassesUser> userClassesList = new ArrayList<>();
-            Random random = new Random();
-            for (int i = 0; i < 5; i++) {
-                ClassesUser cls = new ClassesUser("Inf-10" + i, new Date(), random.nextInt(100));
-                userClassesList.add(cls);
-            }
-            UserDatabaseManager.saveUserInfo(user, userClassesList);
-            getUserView().onGeneratedClassesSuccess(user, userClassesList);
+            getUserView().onGeneratedClassesSuccess(user, repository.generateClassesUser(user));
         } catch (Exception e) {
             getUserView().onError(e);
         }

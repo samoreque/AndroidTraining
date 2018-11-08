@@ -113,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements UserView, OptionF
         });
         getProjects();
         presenter = new UserPresenter(this);
+        presenter.initPresenter();
     }
 
     @Override
@@ -210,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements UserView, OptionF
     @Override
     public void onUser(UserPresenter presenter, User user) {
         Log.d(TAG, "user found " + user.getLogin());
+        Toast.makeText(MainActivity.this, "User found "+ user.getLogin(), Toast.LENGTH_SHORT).show();
         presenter.generateUserClasses(getApplicationContext(), user);
 
     }
